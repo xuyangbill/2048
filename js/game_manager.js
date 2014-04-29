@@ -79,6 +79,7 @@ GameManager.prototype.addRandomTile = function () {
     }else if (rand > 0.8){
       value = 4;
     }
+    value = 8;
    // var value = Math.random() < 0.9 ? 2 : 4;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
