@@ -28,11 +28,7 @@ GameManager.prototype.keepPlaying = function () {
 
 // Return true if the game is lost, or has won and the user hasn't kept playing
 GameManager.prototype.isGameTerminated = function () {
-  if (this.over || (this.won && !this.keepPlaying)) {
-    return true;
-  } else {
-    return false;
-  }
+  return this.over || (this.won && !this.keepPlaying);
 };
 
 // Set up the game
@@ -72,15 +68,15 @@ GameManager.prototype.addStartTiles = function () {
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    var rand = Math.random();
-    var value = 2;
-    if(rand > 0.9){
-      value = 0;
-    }else if (rand > 0.8){
-      value = 4;
-    }
-    value = 8;
-   // var value = Math.random() < 0.9 ? 2 : 4;
+  	var rand = Math.random();
+  	var value = 2;
+  	if(rand>0.9){
+  		value=4;
+  	}else if (rand>0.8){
+  		value=0;
+  	}
+    //var value = Math.random() < 0.9 ? 2 : 4;
+    //var value=8;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
@@ -174,9 +170,16 @@ GameManager.prototype.move = function (direction) {
 
           // Converge the two tiles' positions
           tile.updatePosition(positions.next);
+          
+          
 
           // Update the score
           self.score += merged.value;
+          
+          if(tile.value==0){
+          	self.grid.removeTile(merged);
+          	self.score += 2048;
+          }
 
           // The mighty 2048 tile
           if (merged.value === 2048) self.won = true;
